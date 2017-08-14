@@ -41,7 +41,7 @@ node(""){
            {
                // Run all tasks on the app. This includes pushing to OpenShift and S3.
                sh """
-               pushd ${workspaceDir}/${appName}
+               pushd ${workspaceDir}/${appName}/apps/${appName}-app
                ./gradlew ${GRADLE_TASK}
                popd
                """
@@ -49,9 +49,7 @@ node(""){
        }
        stage ("Clean")
        {
-            sh """
-            rm -rf ${workspaceDir}/${appName}/
-            """
+            step([$class: 'WsCleanup'])
        }
     }
     catch(e){
