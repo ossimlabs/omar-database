@@ -42,7 +42,7 @@ node(""){
                // Run all tasks on the app. This includes pushing to OpenShift and S3.
                sh """
                pushd ${workspaceDir}/${appName}
-               ./gradlew dockerImageToS3
+               ./gradlew ${GRADLE_TASK}
                popd
                """
            }
