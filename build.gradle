@@ -49,8 +49,7 @@ apply plugin: "maven"
 group "io.ossim.omar.apps"
 
 dependencies {
-    classpath "com.bmuschko:gradle-docker-plugin:3.0.12"
-    classpath "com.github.skhatri:gradle-s3-plugin:1.0.4"
+    compile 'org.codehaus.groovy:groovy-all:2.4.7'
 }
 
 repositories {
