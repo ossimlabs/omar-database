@@ -4,9 +4,9 @@ buildscript {
     ext {
         hasJar={false}
         baseImage = "omar-base"
-        dockerFile="docker/Dockerfile"
-        postgresDb = o2_omar_db
-        postgresUser = postgres
+        dockerFile= "docker/Dockerfile"
+        postgresDb = "o2_omar_db"
+        postgresUser = "postgres"
         dockerStatementsOverride = {
             [
                 "FROM ${project.dockerNamespaceUrl}${project.ext.baseImage}:${project.dockerAppTag}",
