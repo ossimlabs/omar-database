@@ -13,7 +13,8 @@ LABEL com.radiantblue.version="0.1"\
       com.radiantblue.source=""\
       com.radiantblue.classification="UNCLASSIFIED"
 RUN apt-get --assume-yes update && apt-get --assume-yes install postgis && apt-get --assume-yes clean
-
+ENV POSTGRES_DB o2_omar_db
+ENV POSTGRES_USER postgres
 ADD init-add-postgis.sh /docker-entrypoint-initdb.d/init-add-postgis.sh
 
 EXPOSE 5432
