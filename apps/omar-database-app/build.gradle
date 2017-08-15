@@ -18,7 +18,7 @@ buildscript {
                     "USER root",
                     "ENV POSTGRES_DB o2_omar_db",
                     "ENV POSTGRES_USER postgres",
-                    """RUN rpm -ivh https://download.postgresql.org/pub/repos/yum/9.5/redhat/rhel-7-x86_64/pgdg-redhat95-9.5-3.noarch.rpm && \
+                    """RUN rpm -Va --nofiles --nodigest https://download.postgresql.org/pub/repos/yum/9.5/redhat/rhel-7-x86_64/pgdg-redhat95-9.5-3.noarch.rpm && \
                    yum -y install postgresql95 postgresql95-server postgresql95-libs postgresql95-contrib postgresql95-devel postgis2_95 && \
                    /usr/pgsql-9.6/bin/postgresql96-setup initdb && \
                    systemctl enable postgresql-9.5 && \
