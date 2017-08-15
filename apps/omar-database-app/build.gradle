@@ -16,13 +16,7 @@ buildscript {
                    com.radiantblue.source=""\
                    com.radiantblue.classification="UNCLASSIFIED" """,
                     "USER root",
-                    """RUN yum -y install -y yum-utils && \
-                           yum-config-manager --enable rhel-server-rhscl-7-rpms && \\
-                           yum-config-manager --enable rhel-7-server-optional-rpms && \\
-                           yum-config-manager --enable rhel-7-server-ose-3.2-rpms && \\
-                           rpm -ivh https://download.postgresql.org/pub/repos/yum/9.5/redhat/rhel-7-x86_64/pgdg-redhat95-9.5-3.noarch.rpm && \
-                           yum install -y --setopt=tsflags=nodocs rsync tar gettext bind-utils postgresql95 postgresql95-server nss_wrapper && \\
-                           rpm -V rsync tar gettext bind-utils postgresql95 postgresql95-postgresql-contrib nss_wrapper && \\
+                    """RUN yum install -y postgresql-server postgis2_96 && \\
                            yum clean all && \\
                    /usr/pgsql-9.5/bin/postgresql95-setup initdb && \
                    systemctl enable postgresql-9.5 && \
