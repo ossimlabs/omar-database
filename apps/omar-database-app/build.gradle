@@ -21,7 +21,7 @@ buildscript {
                            yum install -y postgresql94 postgresql94-server postgresql94-devel postgresql94-contrib postgis2_94 && \\
                            yum clean all && \
                            mkdir -p /var/lib/postgres/data && \
-                           /usr/pgsql-9.4/bin/postgresql94-setup initdb --pg-data=/var/lib/postgres/data && \
+                           /usr/pgsql-9.4/bin/postgresql94-setup initdb && \
                            systemctl start postgresql94""",
                     "USER ${project.ext.postgresUser}",
                     """RUN createdb ${project.ext.postgresDb} && \
