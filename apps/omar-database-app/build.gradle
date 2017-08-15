@@ -18,7 +18,8 @@ buildscript {
                     "USER root",
                     "ENV POSTGRES_DB o2_omar_db",
                     "ENV POSTGRES_USER postgres",
-                    """RUN yum -y groupinstall "PostgreSQL Database Server 9.6 PGDG" && \
+                    """RUN yum -y install http://yum.postgresql.org/9.6/redhat/rhel-7-x86_64/pgdg-redhat96-9.6.3.noarch.rpm && \
+                   yum -y groupinstall "PostgreSQL Database Server 9.6 PGDG" && \
                    yum -y install postgis2_96 && \
                    /usr/pgsql-9.6/bin/postgresql96-setup initdb && \
                    systemctl enable postgresql-9.6 && \
