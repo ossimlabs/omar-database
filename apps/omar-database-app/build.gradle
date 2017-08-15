@@ -20,7 +20,7 @@ buildscript {
                            rpm -ivh pgdg-redhat94-9.4-3.noarch.rpm && \
                            yum install -y postgresql94 postgresql94-server postgresql94-devel postgresql94-contrib postgis2_94 && \\
                            yum clean all && \
-                           mkdir /var/lib/postgres/data""",
+                           mkdir -p /var/lib/postgres/data""",
                     "USER ${project.ext.postgresUser}",
                     "RUN initdb  -D '/var/lib/postgres/data'",
                     "USER root",
