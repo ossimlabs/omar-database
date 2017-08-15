@@ -22,7 +22,7 @@ buildscript {
                            yum clean all && \
                            mkdir -p /var/lib/postgres/data && \
                            /usr/pgsql-9.4/bin/postgresql94-setup initdb -D /var/lib/postgres/data && \
-                           systemctl start postgresql.service""",
+                           systemctl start postgresql94""",
                     "USER ${project.ext.postgresUser}",
                     """RUN createdb ${project.ext.postgresDb} && \
                            psql -d ${project.ext.postgresDb} -v ON_ERROR_STOP=1 --username ${project.ext.postgresUser} -c \"CREATE EXTENSION postgis\"""",
