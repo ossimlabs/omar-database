@@ -20,8 +20,11 @@ buildscript {
                            rpm -ivh pgdg-redhat94-9.4-3.noarch.rpm && \
                            yum install -y postgresql94 postgresql94-server postgresql94-devel postgresql94-contrib postgis2_94 && \\
                            yum clean all && \
-                           systemctl enable postgresql-9.4 && \
-                           systemctl start postgresql-9.4""",
+                           mkdir /var/lib/postgres/data""",
+                    "USER ${project.ext.postgresUser}",
+                    "RUN initdb  -D '/var/lib/postgres/data'",
+                    "USER root",
+                    "RUN systemctl start postgresql.service",
                     "USER ${project.ext.postgresUser}",
                     """RUN createdb ${project.ext.postgresDb} && \
                            psql -d ${project.ext.postgresDb} -v ON_ERROR_STOP=1 --username ${project.ext.postgresUser} -c \"CREATE EXTENSION postgis\"""",
