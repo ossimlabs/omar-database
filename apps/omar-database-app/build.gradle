@@ -19,8 +19,7 @@ buildscript {
                     """RUN wget https://download.postgresql.org/pub/repos/yum/9.4/redhat/rhel-7-x86_64/pgdg-redhat94-9.4-3.noarch.rpm && \
                            rpm -ivh pgdg-redhat94-9.4-3.noarch.rpm && \
                            yum install -y postgresql94 postgresql94-server postgresql94-devel postgresql94-contrib postgis2_94 && \\
-                           yum clean all && \
-                           /usr/pgsql-9.4/bin/postgresql94-setup initdb""",
+                           yum clean all""",
                     "USER ${project.ext.postgresUser}",
                     """RUN createdb ${project.ext.postgresDb} && \
                            psql -d ${project.ext.postgresDb} -v ON_ERROR_STOP=1 --username ${project.ext.postgresUser} -c \"CREATE EXTENSION postgis\"""",
