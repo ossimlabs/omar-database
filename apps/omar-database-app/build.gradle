@@ -16,7 +16,8 @@ buildscript {
                    com.radiantblue.source=""\
                    com.radiantblue.classification="UNCLASSIFIED" """,
                     "USER root",
-                    """RUN yum install -y postgresql-server postgis2_96 && \\
+                    """RUN yum install -y systemd-219-30.el7.x86_6
+                           yum install -y postgresql-server postgis2_96 && \\
                            yum clean all && \\
                    /usr/pgsql-9.5/bin/postgresql95-setup initdb && \
                    systemctl enable postgresql-9.5 && \
