@@ -22,9 +22,8 @@ buildscript {
                            yum-config-manager --enable rhel-server-rhscl-7-rpms && \\
                            yum-config-manager --enable rhel-7-server-optional-rpms && \\
                            yum-config-manager --enable rhel-7-server-ose-3.2-rpms && \\
-                           INSTALL_PKGS="rsync tar gettext bind-utils rh-postgresql95 rh-postgresql95-postgresql-contrib nss_wrapper" && \\
-                           yum install -y --setopt=tsflags=nodocs $INSTALL_PKGS && \\
-                           rpm -V $INSTALL_PKGS && \\
+                           yum install -y --setopt=tsflags=nodocs rsync tar gettext bind-utils rh-postgresql95 rh-postgresql95-postgresql-contrib nss_wrapper && \\
+                           rpm -V rsync tar gettext bind-utils rh-postgresql95 rh-postgresql95-postgresql-contrib nss_wrapper && \\
                            yum clean all && \\
                    /usr/pgsql-9.5/bin/postgresql95-setup initdb && \
                    systemctl enable postgresql-9.5 && \
