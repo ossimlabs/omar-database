@@ -22,7 +22,7 @@ buildscript {
                            yum clean all && \
                            mkdir -p /var/lib/postgres/data""",
                     "USER ${project.ext.postgresUser}",
-                    "RUN initdb  -D '/var/lib/postgres/data'",
+                    "RUN /usr/pgsql-9.4/bin/postgresql94-setup initdb -D '/var/lib/postgres/data'",
                     "USER root",
                     "RUN systemctl start postgresql.service",
                     "USER ${project.ext.postgresUser}",
