@@ -18,14 +18,20 @@ buildscript {
                     "USER root",
                     "ENV POSTGRES_DB o2_omar_db",
                     "ENV POSTGRES_USER postgres",
-                    """RUN rpm -Va --nofiles --nodigest https://download.postgresql.org/pub/repos/yum/9.5/redhat/rhel-7-x86_64/pgdg-redhat95-9.5-3.noarch.rpm && \
-                   yum -y install postgresql95 postgresql95-server postgresql95-libs postgresql95-contrib postgresql95-devel postgis2_95 && \
-                   /usr/pgsql-9.6/bin/postgresql96-setup initdb && \
+                    """RUN yum -y install -y yum-utils && \
+                           yum-config-manager --enable rhel-server-rhscl-7-rpms && \\
+                           yum-config-manager --enable rhel-7-server-optional-rpms && \\
+                           yum-config-manager --enable rhel-7-server-ose-3.2-rpms && \\
+                           INSTALL_PKGS="rsync tar gettext bind-utils rh-postgresql95 rh-postgresql95-postgresql-contrib nss_wrapper" && \\
+                           yum install -y --setopt=tsflags=nodocs $INSTALL_PKGS && \\
+                           rpm -V $INSTALL_PKGS && \\
+                           yum clean all && \\
+                   /usr/pgsql-9.5/bin/postgresql95-setup initdb && \
                    systemctl enable postgresql-9.5 && \
                    systemctl start postgresql-9.5""",
                     "USER ${project.ext.postgresUser}",
                     """RUN createdb ${project.ext.postgresDb} && \
-                psql -d ${project.ext.postgresDb} -v ON_ERROR_STOP=1 --username ${project.ext.postgresUser} -c \"CREATE EXTENSION postgis\"""",
+                           psql -d ${project.ext.postgresDb} -v ON_ERROR_STOP=1 --username ${project.ext.postgresUser} -c \"CREATE EXTENSION postgis\"""",
                     "ADD omardb.sql omardb.sql",
                     "RUN psql -d ${project.ext.postgresDb} -f omardb.sql",
                     "EXPOSE 5432"
