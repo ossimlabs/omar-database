@@ -16,13 +16,15 @@ buildscript {
                    com.radiantblue.source=""\
                    com.radiantblue.classification="UNCLASSIFIED" """,
                     "USER root",
+                    "ENV HOME /var/lib/pgsql",
                     "ENV PGDATA /var/lib/pgsql/9.4/data",
                     """RUN wget https://download.postgresql.org/pub/repos/yum/9.4/redhat/rhel-7-x86_64/pgdg-redhat94-9.4-3.noarch.rpm && \
                            rpm -ivh pgdg-redhat94-9.4-3.noarch.rpm && \
                            yum install -y systemd postgresql94 postgresql94-server postgresql94-devel postgresql94-contrib postgis2_94 && \\
                            yum clean all && \
-                           mkdir -p /var/lib/pgsql/9.4/data && \
-                           /usr/pgsql-9.4/bin/postgresql94-setup initdb && \
+                           mkdir -p /var/lib/pgsql/9.4/data""",
+                    "WORKDIR /var/lib/pgsql",
+                    """RUN /usr/pgsql-9.4/bin/postgresql94-setup initdb && \
                            systemctl start postgresql94""",
                     "USER ${project.ext.postgresUser}",
                     """RUN createdb ${project.ext.postgresDb} && \
