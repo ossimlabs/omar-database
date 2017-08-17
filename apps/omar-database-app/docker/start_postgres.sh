@@ -42,7 +42,7 @@ if [ -n "${DB_NAME}" ]; then
 
   if [ -n "${SQL_SCRIPT}" ]; then
     echo "Running SQL script \"${SQL_SCRIPT}\" on Database \"${DB_NAME}\" for user \"${DB_USER}\"..."
-    sudo -u postgres -H psql -U postgres -h localhost -f ${SQL_SCRIPT} ${DB_NAME}
+    sudo -u postgres -H psql -U postgres -h localhost -d ${DB_NAME} -f ${SQL_SCRIPT}
   fi
 fi
 }
