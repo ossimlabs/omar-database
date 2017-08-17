@@ -7,6 +7,8 @@
 FROM omar-base:latest
 MAINTAINER DigitalGlobe-RadiantBlue
 
+USER root
+
 RUN yum -y update; yum clean all
 RUN wget https://download.postgresql.org/pub/repos/yum/9.4/redhat/rhel-7-x86_64/pgdg-redhat94-9.4-3.noarch.rpm && \
          rpm -ivh pgdg-redhat94-9.4-3.noarch.rpm
@@ -34,6 +36,8 @@ ADD ./omardb.sql /var/lib/pgsql/9.4/data/omardb.sql
 RUN psql -U postgres -h localhost -p 5432 -c 'create database "o2_omar_db"'
 
 RUN psql -U postgres -h localhost -d o2_omar_db -a -f omardb.sql
+
+USER omar
 
 VOLUME /var/lib/pgsql
 
