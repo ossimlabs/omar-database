@@ -1,37 +1,42 @@
-# This image conducts a postgresql installation from
-# postgres:latest.  It then installs the PostGIS spatial
-# extension for Postgres.  It also adds the postgis
-# extension to the specified database.
-FROM docker-registry-default.ossim.io/o2/omar-base:latest
-MAINTAINER RadiantBlue Technologies radiantblue.com
-LABEL com.radiantblue.version="0.1"\
-      com.radiantblue.description="This image conducts \
-      a postgresql installation from postgres:latest. \
-      It then installs the PostGIS spatial extension for \
-      Postgres. It also adds the postgis extension to the \
-      specified database."\
-      com.radiantblue.source=""\
-      com.radiantblue.classification="UNCLASSIFIED"
+# "ported" by Adam Miller <maxamillion@fedoraproject.org> from
+#   https://github.com/fedora-cloud/Fedora-Dockerfiles
+#
+# Originally written for Fedora-Dockerfiles by
+#   scollier <scollier@redhat.com>
 
-USER root
+FROM omar-base:latest
+MAINTAINER DigitalGlobe-RadiantBlue
 
-ENV POSTGRES_DB o2_omar_db
-ENV POSTGRES_USER postgres
+RUN yum -y update; yum clean all
+RUN wget https://download.postgresql.org/pub/repos/yum/9.4/redhat/rhel-7-x86_64/pgdg-redhat94-9.4-3.noarch.rpm && \
+         rpm -ivh pgdg-redhat94-9.4-3.noarch.rpm
+RUN yum -y install sudo postgresql94-server postgresql94 postgresql94-contrib postgis22_94 proj-epsg proj-nad supervisor pwgen; yum clean all
 
-RUN yum install https://download.postgresql.org/pub/repos/yum/9.6/redhat/rhel-7-x86_64/pgdg-redhat96-9.6-3.noarch.rpm && \
-yum -y install postgresql96 postgresql96-server postgresql96-contrib postgis2_96 && \
-/usr/pgsql-9.6/bin/postgresql96-setup initdb && \
-systemctl enable postgresql-9.6 && \
-systemctl start postgresql-9.6
+ADD ./postgresql-setup /usr/bin/postgresql-setup
+ADD ./supervisord.conf /etc/supervisord.conf
+ADD ./start_postgres.sh /start_postgres.sh
 
-USER postgres
+#Sudo requires a tty. fix that.
+RUN sed -i 's/.*requiretty$/#Defaults requiretty/' /etc/sudoers
+RUN chmod +x /usr/bin/postgresql-setup
+RUN chmod +x /start_postgres.sh
 
-RUN createdb $POSTGRES_DB && \
-psql -d $POSTGRES_DB -v ON_ERROR_STOP=1 --username $POSTGRES_USER -c "CREATE EXTENSION postgis"
+RUN /usr/bin/postgresql-setup initdb
 
-ADD omardb.sql omardb.sql
-RUN psql -d $POSTGRES_DB -f omardb.sql
+ADD ./postgresql.conf /var/lib/pgsql/9.4/data/postgresql.conf
 
-CMD "postgres"
+RUN chown -v postgres.postgres /var/lib/pgsql/9.4/data/postgresql.conf
+
+RUN echo "host    all             all             0.0.0.0/0               trust" >> /var/lib/pgsql/9.4/data/pg_hba.conf
+
+ADD ./omardb.sql /var/lib/pgsql/9.4/data/omardb.sql
+
+RUN createdb --username=postgres o2_omar_db
+
+RUN psql -U postgres -d o2_omar_db -a -f omardb.sql
+
+VOLUME ["/var/lib/pgsql"]
 
 EXPOSE 5432
+
+CMD ["/bin/bash", "/start_postgres.sh"]
