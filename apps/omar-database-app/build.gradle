@@ -10,7 +10,7 @@ buildscript {
         dockerStatementsOverride = {
             [
                 "FROM ${project.dockerNamespaceUrl}${project.ext.baseImage}:${project.dockerAppTag}",
-                "MAINTAINER DigitalGlobe-RadiantBlue",
+                "MAINTAINER DigitalGlobe-RadiantBlue Technologies",
 
                 "USER root",
 
