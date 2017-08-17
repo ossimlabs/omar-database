@@ -3,6 +3,7 @@
 DB_NAME=${POSTGRES_DB:-}
 DB_USER=${POSTGRES_USER:-}
 DB_PASS=${POSTGRES_PASSWORD:-}
+SQL_SCRIPT=${OMAR_SQL_SCRIPT:-}
 PG_CONFDIR="/var/lib/pgsql/data"
 
 __create_user() {
@@ -23,7 +24,7 @@ if [ -n "${DB_USER}" ]; then
     echo "CREATE ROLE ${DB_USER} with CREATEROLE login superuser PASSWORD '${DB_PASS}';" |
       sudo -u postgres -H postgres --single \
        -c config_file=${PG_CONFDIR}/postgresql.conf -D ${PG_CONFDIR}
-  
+
 fi
 
 if [ -n "${DB_NAME}" ]; then
@@ -37,6 +38,11 @@ if [ -n "${DB_NAME}" ]; then
     echo "GRANT ALL PRIVILEGES ON DATABASE ${DB_NAME} to ${DB_USER};" |
       sudo -u postgres -H postgres --single \
       -c config_file=${PG_CONFDIR}/postgresql.conf -D ${PG_CONFDIR}
+  fi
+
+  if [ -n "${SQL_SCRIPT}" ]; then
+    echo "Running SQL script \"${SQL_SCRIPT}\" on Database \"${DB_NAME}\" for user \"${DB_USER}\"..."
+    sudo psql -U postgres -h localhost -f ${SQL_SCRIPT} ${DB_NAME}
   fi
 fi
 }
