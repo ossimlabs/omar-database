@@ -35,6 +35,7 @@ buildscript {
                 "RUN echo \"host    all             all             0.0.0.0/0               trust\" >> /var/lib/pgsql/data/pg_hba.conf",
 
                 "ADD ./omardb.sql /var/lib/pgsql/data/omardb.sql",
+                "RUN chown -v ${project.ext.postgresUser}:${project.ext.postgresUser} /var/lib/pgsql/data/omardb.sql",
 
 //                "RUN /usr/pgsql-9.4/bin/createdb -U ${project.ext.postgresUser} -h localhost -p 5432 ${project.ext.postgresDb}",
 //                "RUN /usr/pgsql-9.4/bin/psql -U ${project.ext.postgresUser} -d ${project.ext.postgresDb} -a -f /var/lib/pgsql/data/omardb.sql",
