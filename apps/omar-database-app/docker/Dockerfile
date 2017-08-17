@@ -34,9 +34,9 @@ RUN echo "host    all             all             0.0.0.0/0               trust"
 
 ADD ./omardb.sql /var/lib/pgsql/9.4/data/omardb.sql
 
-RUN /usr/pgsql-9.4/bin/createdb -U postgres -h localhost -p 5432 o2_omar_db
-
-RUN /usr/pgsql-9.4/bin/psql -U postgres -h localhost -d o2_omar_db -a -f /var/lib/pgsql/9.4/data/omardb.sql
+#RUN /usr/pgsql-9.4/bin/createdb -U postgres -h localhost -p 5432 o2_omar_db
+#
+#RUN /usr/pgsql-9.4/bin/psql -U postgres -h localhost -d o2_omar_db -a -f /var/lib/pgsql/9.4/data/omardb.sql
 
 USER omar
 
