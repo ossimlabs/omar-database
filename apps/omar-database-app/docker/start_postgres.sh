@@ -22,7 +22,7 @@ if [ -n "${DB_USER}" ]; then
   fi
     echo "Creating user \"${DB_USER}\"..."
     echo "CREATE ROLE ${DB_USER} with CREATEROLE login superuser PASSWORD '${DB_PASS}';" |
-      sudo -u /usr/pgsql-9.4/bin/postgres -H postgres --single \
+      sudo -u postgres -H /usr/pgsql-9.4/bin/postgres --single \
        -c config_file=${PG_CONFDIR}/postgresql.conf -D ${PG_CONFDIR}
 
 fi
@@ -30,19 +30,19 @@ fi
 if [ -n "${DB_NAME}" ]; then
   echo "Creating database \"${DB_NAME}\"..."
   echo "CREATE DATABASE ${DB_NAME};" | \
-    sudo -u /usr/pgsql-9.4/bin/postgres -H postgres --single \
+    sudo -u postgres -H /usr/pgsql-9.4/bin/postgres --single \
      -c config_file=${PG_CONFDIR}/postgresql.conf -D ${PG_CONFDIR}
 
   if [ -n "${DB_USER}" ]; then
     echo "Granting access to database \"${DB_NAME}\" for user \"${DB_USER}\"..."
     echo "GRANT ALL PRIVILEGES ON DATABASE ${DB_NAME} to ${DB_USER};" |
-      sudo -u /usr/pgsql-9.4/bin/postgres -H postgres --single \
+      sudo -u postgres -H /usr/pgsql-9.4/bin/postgres --single \
       -c config_file=${PG_CONFDIR}/postgresql.conf -D ${PG_CONFDIR}
   fi
 
   if [ -n "${SQL_SCRIPT}" ]; then
     echo "Running SQL script \"${SQL_SCRIPT}\" on Database \"${DB_NAME}\" for user \"${DB_USER}\"..."
-    sudo psql -U postgres -h localhost -f ${SQL_SCRIPT} ${DB_NAME}
+    sudo -u postgres psql -U postgres -h localhost -f ${SQL_SCRIPT} ${DB_NAME}
   fi
 fi
 }
