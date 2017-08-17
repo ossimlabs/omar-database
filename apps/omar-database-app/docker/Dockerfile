@@ -19,7 +19,8 @@ ADD ./supervisord.conf /etc/supervisord.conf
 ADD ./start_postgres.sh /start_postgres.sh
 
 #Sudo requires a tty. fix that.
-RUN sed -i 's/.*requiretty$/#Defaults requiretty/' /etc/sudoers
+RUN sed -i -e 's/Defaults    requiretty.*/ #Defaults    requiretty/g' /etc/sudoers
+
 RUN chmod +x /usr/bin/postgresql-setup
 RUN chmod +x /start_postgres.sh
 
