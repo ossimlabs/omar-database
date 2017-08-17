@@ -4,7 +4,7 @@ DB_NAME=${POSTGRES_DB:-}
 DB_USER=${POSTGRES_USER:-}
 DB_PASS=${POSTGRES_PASSWORD:-}
 SQL_SCRIPT=${OMAR_SQL_SCRIPT:-}
-PG_CONFDIR="/var/lib/pgsql/9.4/data"
+PG_CONFDIR="/var/lib/pgsql/data"
 
 __create_user() {
   #Grant rights
