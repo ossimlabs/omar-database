@@ -2,7 +2,7 @@
 
 DB_NAME=${POSTGRES_DB:-}
 DB_USER=${POSTGRES_USER:-}
-#DB_PASS=${POSTGRES_PASSWORD:-}
+DB_PASS=${POSTGRES_PASSWORD:-}
 SQL_SCRIPT=${OMAR_SQL_SCRIPT:-}
 PG_CONFDIR="/var/lib/pgsql/9.4/data"
 
@@ -39,6 +39,8 @@ if [ -n "${DB_NAME}" ]; then
       sudo -u postgres -H /usr/pgsql-9.4/bin/postgres --single \
       -c config_file=${PG_CONFDIR}/postgresql.conf -D ${PG_CONFDIR}
   fi
+
+  sleep 5
 
   if [ -n "${SQL_SCRIPT}" ]; then
     echo "Running SQL script \"${SQL_SCRIPT}\" on Database \"${DB_NAME}\" for user \"${DB_USER}\"..."
