@@ -35,8 +35,8 @@ RUN psql -U postgres -h localhost -p 5432 -c 'create database "o2_omar_db"'
 
 RUN psql -U postgres -h localhost -d o2_omar_db -a -f omardb.sql
 
-VOLUME ["/var/lib/pgsql"]
+VOLUME /var/lib/pgsql
 
 EXPOSE 5432
 
-CMD ["/bin/bash", "/start_postgres.sh"]
+CMD /bin/bash /start_postgres.sh
