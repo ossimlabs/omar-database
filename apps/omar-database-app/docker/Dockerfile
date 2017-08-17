@@ -40,7 +40,7 @@ ADD ./omardb.sql /var/lib/pgsql/data/omardb.sql
 
 #USER omar
 
-VOLUME /var/lib/pgsql
+VOLUME /var/lib/pgsql/data
 
 EXPOSE 5432
 
