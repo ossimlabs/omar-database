@@ -9,7 +9,7 @@ buildscript {
         postgresUser = "postgres"
         dockerStatementsOverride = {
             [
-                "FROM omar-base:latest",
+                "FROM ${project.dockerNamespaceUrl}${project.ext.baseImage}:${project.dockerAppTag}",
                 "MAINTAINER DigitalGlobe-RadiantBlue",
 
                 "RUN wget https://download.postgresql.org/pub/repos/yum/9.4/redhat/rhel-7-x86_64/pgdg-redhat94-9.4-3.noarch.rpm",
@@ -28,13 +28,13 @@ buildscript {
 
                 "ADD ./postgresql.conf /var/lib/pgsql/9.4/data/postgresql.conf",
 
-                "RUN chown -v postgres.postgres /var/lib/pgsql/9.4/data/postgresql.conf",
+                "RUN chown -v ${project.ext.postgresUser}:${project.ext.postgresUser} /var/lib/pgsql/9.4/data/postgresql.conf",
                 "RUN echo \"host    all             all             0.0.0.0/0               trust\" >> /var/lib/pgsql/9.4/data/pg_hba.conf",
 
                 "ADD ./omardb.sql /var/lib/pgsql/9.4/data/omardb.sql",
 
-                "RUN createdb --username=postgres o2_omar_db",
-                "RUN psql -U postgres -d o2_omar_db -a -f omardb.sql",
+                "RUN psql -U ${project.ext.postgresUser} -h localhost -p 5432 -c 'create database \"${project.ext.postgresDb}\"'",
+                "RUN psql -U ${project.ext.postgresUser} -d ${project.ext.postgresDb} -a -f omardb.sql",
 
                 "VOLUME [\"/var/lib/pgsql\"]",
 

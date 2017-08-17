@@ -31,9 +31,9 @@ RUN echo "host    all             all             0.0.0.0/0               trust"
 
 ADD ./omardb.sql /var/lib/pgsql/9.4/data/omardb.sql
 
-RUN createdb --username=postgres o2_omar_db
+RUN psql -U postgres -h localhost -p 5432 -c 'create database "o2_omar_db"'
 
-RUN psql -U postgres -d o2_omar_db -a -f omardb.sql
+RUN psql -U postgres -h localhost -d o2_omar_db -a -f omardb.sql
 
 VOLUME ["/var/lib/pgsql"]
 
