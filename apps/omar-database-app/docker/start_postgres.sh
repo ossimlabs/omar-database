@@ -11,17 +11,18 @@ __create_user() {
   usermod -G wheel,adm postgres
 
   # Check to see if we have pre-defined credentials to use
+
 if [ -n "${DB_USER}" ]; then
-#  if [ -z "${DB_PASS}" ]; then
-#    echo ""
-#    echo "WARNING: "
-#    echo "No password specified for \"${DB_USER}\". Generating one"
-#    echo ""
-#    DB_PASS=$(pwgen -c -n -1 12)
-#    echo "Password for \"${DB_USER}\" created as: \"${DB_PASS}\""
-#  fi
+  if [ -z "${DB_PASS}" ]; then
+    echo ""
+    echo "WARNING: "
+    echo "No password specified for \"${DB_USER}\". Generating one"
+    echo ""
+    DB_PASS=$(pwgen -c -n -1 12)
+    echo "Password for \"${DB_USER}\" created as: \"${DB_PASS}\""
+  fi
     echo "Creating user \"${DB_USER}\"..."
-    echo "CREATE ROLE ${DB_USER} with CREATEROLE login superuser;" |
+    echo "CREATE ROLE ${DB_USER} with CREATEROLE login superuser PASSWORD '${DB_PASS}';" |
       sudo -u postgres -H /usr/pgsql-9.4/bin/postgres --single \
        -c config_file=${PG_CONFDIR}/postgresql.conf -D ${PG_CONFDIR}
 
