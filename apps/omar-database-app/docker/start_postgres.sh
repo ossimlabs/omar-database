@@ -46,8 +46,9 @@ __create_user() {
 #  fi
 #fi
 echo "Creating o2_omar_db as user postgres"
-sudo -u postgres -H createdb o2_omar_db
-sudo -u postgres -H psql -d o2_omar_db -f /var/lib/pgsql/9.4/data/omardb.sql
+su postgres
+createdb o2_omar_db
+psql -d o2_omar_db -f /var/lib/pgsql/9.4/data/omardb.sql
 }
 
 
