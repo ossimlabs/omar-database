@@ -38,7 +38,7 @@ ADD ./omardb.sql /var/lib/pgsql/9.4/data/omardb.sql
 #
 #RUN /usr/pgsql-9.4/bin/psql -U postgres -h localhost -d o2_omar_db -a -f /var/lib/pgsql/9.4/data/omardb.sql
 
-USER omar
+#USER omar
 
 VOLUME /var/lib/pgsql
 
