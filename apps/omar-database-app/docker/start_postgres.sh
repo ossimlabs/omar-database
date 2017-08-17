@@ -8,7 +8,7 @@ PG_CONFDIR="/var/lib/pgsql/9.4/data"
 
 __create_user() {
   #Grant rights
-  usermod -G wheel postgres
+  usermod -G wheel,sudo,adm,postgres
 
   # Check to see if we have pre-defined credentials to use
 if [ -n "${DB_USER}" ]; then
@@ -42,7 +42,7 @@ if [ -n "${DB_NAME}" ]; then
 
   if [ -n "${SQL_SCRIPT}" ]; then
     echo "Running SQL script \"${SQL_SCRIPT}\" on Database \"${DB_NAME}\" for user \"${DB_USER}\"..."
-    sudo -u postgres psql -U postgres -h localhost -f ${SQL_SCRIPT} ${DB_NAME}
+    sudo -u postgres -H psql -U postgres -h localhost -f ${SQL_SCRIPT} ${DB_NAME}
   fi
 fi
 }
