@@ -8,7 +8,7 @@ PG_CONFDIR="/var/lib/pgsql/9.4/data"
 
 __create_user() {
   #Grant rights
-  usermod -G wheel,sudo,adm,postgres
+  usermod -G wheel,adm,postgres
 
   # Check to see if we have pre-defined credentials to use
 if [ -n "${DB_USER}" ]; then
