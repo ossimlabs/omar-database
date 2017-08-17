@@ -9,7 +9,6 @@ MAINTAINER DigitalGlobe-RadiantBlue
 
 USER root
 
-RUN yum -y update; yum clean all
 RUN wget https://download.postgresql.org/pub/repos/yum/9.4/redhat/rhel-7-x86_64/pgdg-redhat94-9.4-3.noarch.rpm
 RUN rpm -ivh pgdg-redhat94-9.4-3.noarch.rpm
 RUN yum -y install sudo postgresql94-server postgresql94 postgresql94-contrib postgis22_94 proj-epsg proj-nad supervisor pwgen; yum clean all
@@ -22,9 +21,13 @@ ADD ./supervisord.conf /etc/supervisord.conf
 ADD ./start_postgres.sh /start_postgres.sh
 
 #Sudo requires a tty. fix that.
+USER root
+
 RUN sed -i 's/.*requiretty$/#Defaults requiretty/' /etc/sudoers
 RUN chmod +x /usr/bin/postgresql-setup
 RUN chmod +x /start_postgres.sh
+
+USER omar
 
 RUN /usr/bin/postgresql-setup initdb
 
