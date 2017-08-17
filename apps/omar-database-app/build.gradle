@@ -40,7 +40,7 @@ buildscript {
 
                 "EXPOSE 5432",
 
-                "CMD [\"/bin/bash", "/start_postgres.sh\"]",
+                "CMD [\"/bin/bash", "/start_postgres.sh\"]"
             ]
         }
 
