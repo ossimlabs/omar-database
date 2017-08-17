@@ -27,7 +27,7 @@ fi
 
 # this parsing technique fails for PGDATA pathnames containing spaces,
 # but there's not much I can do about it given systemctl's output format...
-PGDATA="/var/lib/pgsql/data"
+PGDATA="/var/lib/pgsql/9.4/data"
 # PGDATA=`systemctl show -p Environment "${SERVICE_NAME}.service" |
 #                 sed 's/^Environment=//' | tr ' ' '\n' |
 #                 sed -n 's/^PGDATA=//p' | tail -n 1`
