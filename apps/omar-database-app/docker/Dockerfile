@@ -37,10 +37,10 @@ RUN echo "host    all             all             0.0.0.0/0               trust"
 ADD ./omardb.sql /var/lib/pgsql/data/omardb.sql
 RUN chown -v postgres:postgres /var/lib/pgsql/9.4/data/omardb.sql
 
-USER 1001
-
-VOLUME /var/lib/pgsql
+VOLUME /var/lib/pgsql/data
 
 EXPOSE 5432
+
+USER 1001
 
 CMD /bin/bash /start_postgres.sh
