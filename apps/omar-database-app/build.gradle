@@ -42,7 +42,7 @@ buildscript {
 
                 "VOLUME /var/lib/pgsql/9.4/",
                 
-                "USER omar",
+                "USER postgres",
 
                 "EXPOSE 5432",
 
