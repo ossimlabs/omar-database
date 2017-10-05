@@ -7,6 +7,8 @@
 FROM omar-base:latest
 MAINTAINER DigitalGlobe-RadiantBlue
 
+USER root
+
 RUN yum -y update; yum clean all
 
 RUN wget https://download.postgresql.org/pub/repos/yum/9.4/redhat/rhel-7-x86_64/pgdg-redhat94-9.4-3.noarch.rpm
@@ -35,7 +37,7 @@ RUN echo "host    all             all             0.0.0.0/0               trust"
 ADD ./omardb.sql /var/lib/pgsql/data/omardb.sql
 RUN chown -v postgres:postgres /var/lib/pgsql/9.4/data/omardb.sql
 
-USER omar
+USER 1001
 
 VOLUME /var/lib/pgsql
 
