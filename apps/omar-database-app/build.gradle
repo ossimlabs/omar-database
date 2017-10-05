@@ -40,8 +40,8 @@ buildscript {
 //                "RUN /usr/pgsql-9.4/bin/createdb -U ${project.ext.postgresUser} -h localhost -p 5432 ${project.ext.postgresDb}",
 //                "RUN /usr/pgsql-9.4/bin/psql -U ${project.ext.postgresUser} -d ${project.ext.postgresDb} -a -f /var/lib/pgsql/9.4/data/omardb.sql",
 
-                "VOLUME /var/lib/pgsql/9.4/data",
-
+//                "VOLUME /var/lib/pgsql/9.4/data",
+                
                 "EXPOSE 5432",
 
                 "CMD /bin/bash /start_postgres.sh"
