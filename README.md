@@ -5,7 +5,8 @@ In order to set up the database for use, use the Dockerfile or the pre-built ima
 After spinning up the container, you must run two commands in order to see data in the database.
 
 **$ su postgres**
-**$ psql -f /var/lib/pgsql/9.4/data/omardb.sql**
+
+**$ psql -d o2_omar_db -f /var/lib/pgsql/9.4/data/omardb.sql**
 
 You must also set these three environment variables
 
