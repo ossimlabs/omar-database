@@ -39,6 +39,4 @@ RUN chown -v postgres:postgres /var/lib/pgsql/9.4/data/omardb.sql
 
 EXPOSE 5432
 
-USER omar
-
 CMD /bin/bash /start_postgres.sh
