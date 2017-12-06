@@ -1,0 +1,102 @@
+apiVersion: v1
+kind: DeploymentConfig
+metadata:
+  name: omar-database-app
+  namespace: omar-dev
+  selfLink: /oapi/v1/namespaces/omar-dev/deploymentconfigs/omar-database-app
+  uid: e7a51b22-bf3a-11e7-ba3b-0e704fd9c8b2
+  resourceVersion: '9274273'
+  generation: 24
+  creationTimestamp: '2017-11-01T19:28:57Z'
+  labels:
+    app: omar-database-app
+  annotations:
+    openshift.io/generated-by: OpenShiftWebConsole
+spec:
+  strategy:
+    type: Rolling
+    rollingParams:
+      updatePeriodSeconds: 1
+      intervalSeconds: 1
+      timeoutSeconds: 600
+      maxUnavailable: 25%
+      maxSurge: 25%
+    resources: {}
+    activeDeadlineSeconds: 21600
+  triggers:
+    - type: ConfigChange
+    - type: ImageChange
+      imageChangeParams:
+        automatic: true
+        containerNames:
+          - omar-database-app
+        from:
+          kind: ImageStreamTag
+          namespace: o2
+          name: 'omar-database-app:latest'
+        lastTriggeredImage: >-
+          172.30.181.173:5000/o2/omar-database-app@sha256:fd248c112b114c6619d51e13a3ddac4d333f6e93bfdae5459e3020755c9e3144
+  replicas: 1
+  test: false
+  selector:
+    app: omar-database-app
+    deploymentconfig: omar-database-app
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: omar-database-app
+        deploymentconfig: omar-database-app
+      annotations:
+        openshift.io/generated-by: OpenShiftWebConsole
+    spec:
+      containers:
+        - name: omar-database-app
+          image: >-
+            172.30.181.173:5000/o2/omar-database-app@sha256:fd248c112b114c6619d51e13a3ddac4d333f6e93bfdae5459e3020755c9e3144
+          ports:
+            - containerPort: 5432
+              protocol: TCP
+          env:
+            - name: POSTGRES_DB
+              value: o2_omar_db
+            - name: POSTGRES_USER
+              value: omardb
+            - name: POSTGRES_PASSWORD
+              value: <PASSWORD>
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          imagePullPolicy: Always
+      restartPolicy: Always
+      terminationGracePeriodSeconds: 30
+      dnsPolicy: ClusterFirst
+      securityContext: {}
+status:
+  latestVersion: 23
+  observedGeneration: 24
+  replicas: 1
+  updatedReplicas: 1
+  availableReplicas: 1
+  unavailableReplicas: 0
+  details:
+    message: image change
+    causes:
+      - type: ImageChange
+        imageTrigger:
+          from:
+            kind: ImageStreamTag
+            namespace: o2
+            name: 'omar-database-app:latest'
+  conditions:
+    - type: Available
+      status: 'True'
+      lastUpdateTime: '2017-11-01T19:29:10Z'
+      lastTransitionTime: '2017-11-01T19:29:10Z'
+      message: Deployment config has minimum availability.
+    - type: Progressing
+      status: 'True'
+      lastUpdateTime: '2017-12-05T13:30:55Z'
+      lastTransitionTime: '2017-12-05T13:30:54Z'
+      reason: NewReplicationControllerAvailable
+      message: replication controller "omar-database-app-23" successfully rolled out
+  readyReplicas: 1
