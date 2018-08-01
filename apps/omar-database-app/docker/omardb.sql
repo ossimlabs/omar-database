@@ -2226,8 +2226,8 @@ INSERT INTO uri_registry (name, uri) VALUES ('source.mongodb', 'maven://org.spri
 INSERT INTO uri_registry (name, uri) VALUES ('sink.websocket', 'maven://org.springframework.cloud.stream.app:websocket-sink-kafka-10:1.1.1.RELEASE');
 INSERT INTO uri_registry (name, uri) VALUES ('processor.groovy-transform', 'maven://org.springframework.cloud.stream.app:groovy-transform-processor-kafka-10:1.1.1.RELEASE');
 INSERT INTO uri_registry (name, uri) VALUES ('source.syslog', 'maven://org.springframework.cloud.stream.app:syslog-source-kafka-10:1.1.1.RELEASE');
-INSERT INTO uri_registry (name, uri) VALUES ('source.omar-scdf-sqs', 'https://artifacts.radiantbluecloud.com/artifactory/omar-local/omar-scdf-sqs/1.0.12-SNAPSHOT/omar-scdf-sqs-1.0.12-SNAPSHOT.jar');
-INSERT INTO uri_registry (name, uri) VALUES ('processor.omar-scdf-aggregator', 'https://artifacts.radiantbluecloud.com/artifactory/omar-local/omar-scdf-aggregator/1.0.8-SNAPSHOT/omar-scdf-aggregator-1.0.8-SNAPSHOT.jar');
+INSERT INTO uri_registry (name, uri) VALUES ('source.omar-scdf-sqs', 'https://nexus.ossim.io/nexus/content/repositories/ossim-deps/omar-scdf-sqs/1.0.12-SNAPSHOT/omar-scdf-sqs-1.0.12-SNAPSHOT.jar');
+INSERT INTO uri_registry (name, uri) VALUES ('processor.omar-scdf-aggregator', 'https://nexus.ossim.io/nexus/content/repositories/ossim-deps/omar-scdf-aggregator/1.0.8-SNAPSHOT/omar-scdf-aggregator-1.0.8-SNAPSHOT.jar');
 
 
 --
